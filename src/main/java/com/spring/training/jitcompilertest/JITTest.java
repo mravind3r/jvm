@@ -27,6 +27,15 @@ for 32bit jvm is 1500 and for 64 bit it is 10,000
 as you can see only test method has been added and not the nonCacheMethod as it was called only n times ( in this case 1, try for different values).
 
 * -XX:CompileThreshold=300 
+* 
+* 14046   17   !   4       com.spring.training.jitcompilertest.JITTest::test (15 bytes)
+  14047   15   !   3       com.spring.training.jitcompilertest.JITTest::test (15 bytes)   made not entrant
+  31356   18       3       com.spring.training.jitcompilertest.JITTest::nonCacheMethod (1 bytes)
+  31357   19       1       com.spring.training.jitcompilertest.JITTest::nonCacheMethod (1 bytes)
+  31357   18       3       com.spring.training.jitcompilertest.JITTest::nonCacheMethod (1 bytes)   made not entrant
+* 31357   20       3       com.spring.training.jitcompilertest.JITTest::cacheMyMethod (1 bytes)  <<<--------   flag did this 
+* 
+* 
 * find the threshold by ..
 * jinfo -flag CompileThreshold <pid>
  * 
