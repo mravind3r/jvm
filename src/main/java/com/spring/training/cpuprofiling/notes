@@ -1,0 +1,5 @@
+java  -Xverify:none -cp spring-training-1.0-SNAPSHOT.jar com.spring.training.cpuprofiling.CPUProfileTest
+connect via jvisual vm and click on cpu profiling , it show you the time spent for every method !
+
+
+

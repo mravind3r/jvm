@@ -1,0 +1,7 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 16 15:09:08 IST 2017*/
+/* DO NOT EDIT */
+
+grant {
+  permission java.io.FilePermission "<<ALL FILES>>", "write";
+};
+
