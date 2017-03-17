@@ -22,5 +22,17 @@ public class OrderDetails {
 	public String getProductName() {
 		return productName;
 	}
+	
+//	@Override
+//	protected void finalize() throws Throwable {
+//		System.out.println(this.toString() + " .. is garbage collected...");
+//	}
 
+	@Override
+	public String toString() {
+		return "OrderDetails [productName=" + productName + ", productPrice=" + productPrice + "]";
+	}
+
+	
+	
 }

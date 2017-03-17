@@ -39,6 +39,29 @@ as you can see only test method has been added and not the nonCacheMethod as it 
 * find the threshold by ..
 * jinfo -flag CompileThreshold <pid>
  * 
+ * if you want to remove a method from jit compilation ?? maybe it is giving some stack overflow errors eg if it is a native method
+ * -XX:CompileCommand=exclude,com/spring/training/jitcompilertest/JITTest,nonCacheMethod
+ * 
+ *   729   15   !   3       com.spring.training.jitcompilertest.JITTest::test (15 bytes)
+    732   16     n 0       java.lang.Thread::sleep (native)   (static)
+  14086   17   !   4       com.spring.training.jitcompilertest.JITTest::test (15 bytes)
+  14087   15   !   3       com.spring.training.jitcompilertest.JITTest::test (15 bytes)   made not entrant
+### Excluding compile: static com.spring.training.jitcompilertest.JITTest::nonCacheMethod
+made not compilable on all levels  com.spring.training.jitcompilertest.JITTest::nonCacheMethod (1 bytes)   excluded by CompilerOracle
+  31554   18       3       com.spring.training.jitcompilertest.JITTest::cacheMyMethod (1 bytes)
+
+ * if you want to exclude a number of methods , then create a file and add the following content
+ * exclude,com/spring/training/jitcompilertest/JITTest,nonCacheMethod
+ * exclude,java/lang/Thread,sleep
+ * 
+ * and the jvm flag to be used -XX:CompileCommandFile=/exclusion.txt
+ * 
+ * 
+ * how to adjust the code cache size ?
+ * -XX:IntialCodeCacheSize=10m
+ * -XX:ReservedCodeCacheSize=20
+ * max size should be 25% of the machine ram, this is independent of the heap size which as discussed earlier cannot exceed 50% of machine ram
+ * 
  */
 		
 

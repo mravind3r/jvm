@@ -264,7 +264,7 @@ can also use JvisualVM and create a thread dump.
 Save the threaddump file.
 we will analyze via ibm thread dump analyzer.
 
-java -jar ha456.jar
+java -jar jca.jar
 
 what if you have a remote application and want to connect via various tools , ie remotely
 -- we need to pass some parameters to disable security
@@ -326,7 +326,45 @@ the most frequently used methods are cached by the jvm in code cache so that its
 it uses something called compile thresh hold, compile thresh hold denotes the number of times a method should have been called to be added to code cache.
 for 32bit jvm is 1500 and for 64 bit it is 10,000
 
-we can tune the jit !
+we can tune the jit ! check code for more notes
+
+** disable System.gc() 
+-XX:DisableExplicitGC
+
+
+*** coding guidelines for performant applications
+
+1)References 
+SoftReference
+WeakReference
+PhantomReference
+
+Java internally maintains a ReferenceQueue for both strong and weak references
+Java will make the object for garbage collection of it does not find a reference in the reference queue for the object.
+Each object will have it own reference queue internally.
+
+
+SoftReferences -- only reclaim this object if there is memory pressure..
+
+PhantomReference is closely related to finalize method , howevere its not a good practise to override finalize as it may never be invoked.
+when finalize method is overidded then jvm creates 2 objects the object itself and the finalizer object.
+when the object is garbage collected the finalizer object has the reponsibility to call the finalize method of that object
+
+
+phantom reference - keep some data around even after the object becomes unreachable to perform some clean up tasks
+
+
+
+some GC algorithms
+1)SerialGC
+2)ParallelGC -- defragmentation of memory happens, prefrerred over cms cos of defrag
+3)ConcurrentMarkAndSweepGC  - defrag does not happen , hence its not preferred over parallel
+4)G1Gc - garbage first gc , jdk 1.8 , divides entire old region into 4 places and defref objects are moved to all 4 places(areas) , when memory is needed it cleans
+ the area where there is most garbage.
+
+as of 64 bit machines parallel gcs are default algo.
+
+
 
 
 
